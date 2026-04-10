@@ -1,0 +1,355 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --wall: #f4f1ec;
+  --wall-deep: #ebe7e0;
+  --ink: #1c1c1c;
+  --ink-light: #6b6560;
+  --ink-faint: #b5afa7;
+  --accent: #8c7a6b;
+  --accent-hover: #6e5d4e;
+  --surface: #fffdf9;
+  --border: #d6d0c8;
+  --serif: "Cormorant Garamond", "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  --sans: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--wall);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 24px 60px;
+
+  /* subtle linen / plaster texture */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.5) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.3) 0%, transparent 70%);
+}
+
+/* ---- Gallery Frame ---- */
+.gallery-wall {
+  width: 100%;
+  max-width: 540px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 56px 48px 44px;
+  position: relative;
+
+  /* museum frame shadow */
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 12px 40px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 4px var(--surface),
+    inset 0 0 0 5px var(--border);
+}
+
+/* ---- Header / Exhibit Label ---- */
+.exhibit-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.exhibit-label {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.header-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--ink-faint);
+  margin: 20px auto 0;
+}
+
+/* ---- Form ---- */
+.todo-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 14px 0;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  outline: none;
+  transition: border-color 0.4s ease;
+}
+
+.todo-form input::placeholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.todo-form input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.todo-form button {
+  width: 44px;
+  height: 44px;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--ink-faint);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.todo-form button:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+/* ---- Filters ---- */
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.filter-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--border);
+}
+
+.filter-btn {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.filter-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.filter-btn:hover {
+  color: var(--ink-light);
+}
+
+.filter-btn.active {
+  color: var(--ink);
+}
+
+.filter-btn.active::after {
+  width: 100%;
+}
+
+/* ---- Todo List ---- */
+.todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--wall-deep);
+  animation: appear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.todo-item:first-child {
+  border-top: 1px solid var(--wall-deep);
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.todo-item.completed .todo-text {
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-faint);
+  text-decoration-thickness: 0.5px;
+}
+
+/* ---- Checkbox ---- */
+.todo-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--ink-faint);
+  border-radius: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.todo-checkbox:hover {
+  border-color: var(--accent);
+}
+
+.todo-checkbox:checked {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.todo-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--surface);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+/* ---- Text ---- */
+.todo-text {
+  flex: 1;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+/* ---- Delete ---- */
+.delete-btn {
+  background: none;
+  border: none;
+  color: transparent;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 300;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.todo-item:hover .delete-btn {
+  color: var(--ink-faint);
+}
+
+.delete-btn:hover {
+  color: var(--accent-hover) !important;
+}
+
+/* ---- Footer ---- */
+.todo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+.clear-btn {
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  border-bottom: 0.5px solid transparent;
+}
+
+.clear-btn:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-hover);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  body {
+    padding: 40px 12px;
+  }
+
+  .gallery-wall {
+    padding: 40px 28px 32px;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  .filters {
+    gap: 10px;
+  }
+
+  .filter-btn {
+    font-size: 0.7rem;
+  }
+}
